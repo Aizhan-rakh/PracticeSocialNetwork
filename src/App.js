@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
+import Loginpage from "./components/Login/login";
 // import classes from "./components/Navbar/Navbar.module.css";
 
 
@@ -28,6 +29,8 @@ const App = (props) => {
                                element= {<DialogsContainer />} />
                         <Route path={'/users'}
                                element= {<UsersContainer />} />
+                        <Route path={'/login'}
+                               element= {<Loginpage />} />
 
                     </Routes>
                 </div>

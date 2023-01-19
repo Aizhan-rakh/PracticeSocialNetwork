@@ -1,4 +1,3 @@
-const UPDATE_NEW_MEESSAGE_BODY = 'UPDATE-NEW-MEESSAGE-BODY';
 const SEND_MEESSAGE = 'SEND_MEESSAGE';
 
 let initialState = {
@@ -11,22 +10,16 @@ let initialState = {
         { id: 2, name: 'Aisara' },
         { id: 3, name: 'Karro' },
         { id: 4, name: 'Ahmad' }
-    ],
-    newMessageBody: ""
+    ]
+    // newMessageBody: ""
 };
 
-const dialogsReducer = (state = initialState, action) => {
+const dialogsReducer = (state= initialState, action) => {
     switch (action.type) {
-        case UPDATE_NEW_MEESSAGE_BODY:
-            return {
-                ...state,
-                newMessageBody: action.body
-            }
         case SEND_MEESSAGE:
-            let body = state.newMessageBody;
+            let body = action.newMessageBody;
             return {
                 ...state,
-                newMessageBody: "",
                 messages: [...state.messages, {id: 3, message: body}] //сейчас пишут так вместо push, for unshift просто меняешь местами
             }
         default:
@@ -35,9 +28,6 @@ const dialogsReducer = (state = initialState, action) => {
 
 }
 
-export const sendMessageCreator = () => ({ type: SEND_MEESSAGE })
-export const updateNewMessageBodyCreator = (body) => ({
-    type: UPDATE_NEW_MEESSAGE_BODY, body: body
-})
+export const sendMessageCreator = (newMessageBody) => ({ type: SEND_MEESSAGE, newMessageBody })
 
 export default dialogsReducer;

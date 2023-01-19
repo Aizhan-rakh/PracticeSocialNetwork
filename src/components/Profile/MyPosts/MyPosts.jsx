@@ -1,8 +1,30 @@
 import React from 'react'; //we should import jsx, react is library from node modules
 import classes from './MyPosts.module.css';
 import Post from './Post/Post';
-import { updateNewPostTextActionCreator, addPostActionCreator } from '../../../redux/profile-reducer';
+import {Field, Form} from "react-final-form"; //собирать данные и отправить их в handleSubmit
+import {composeValidators, maxLengthCreator, required} from "../../../utils/validators/validators";
+import {Textarea} from "../../common/FormsControls/FormsControls";
 
+
+let AddNewPostForm =(props) => {
+    return (
+        <Form
+            onSubmit={props.onSubmit}
+            render={({ handleSubmit }) => (
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <Field component= {Textarea} name={"newPostText"}
+                               validate={composeValidators[required, maxLengthCreator(15)]}
+                        placeholder ={"Post message"}/>
+                    </div>
+                    <div>
+                        <button>Add post</button>
+                    </div>
+                </form>
+            )}
+        />
+    )
+}
 
 const MyPosts = (props) => {
 
@@ -10,27 +32,14 @@ const MyPosts = (props) => {
 
   let newPostElement = React.createRef();
 
-  let onPostChange = () => {
-    let text = newPostElement.current.value;
-    props.updateNewPostText(text);
-  }
-
-  let onAddPost = () => {
-    props.addPost();
+  let onAddPost = (values) => {
+   props.addPost(values.newPostText);
   }
 
   return (
     <div className={classes.postsBlock}>
       <h3>My posts</h3>
-      <div>
-        <div>
-          <textarea ref={newPostElement} onChange={onPostChange}
-            value={props.newPostText} cols="30" rows="10" />
-        </div>
-        <div>
-          <button onClick={onAddPost}>Add post</button>
-        </div>
-      </div>
+        <AddNewPostForm onSubmit = {onAddPost}/>
       <div className={classes.posts}>
         {postsElements}
       </div>
