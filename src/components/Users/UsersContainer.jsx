@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from "react-redux";
 import {
     follow, setCurrentPage, unfollow,
-    toggleFollowingProcess, getUsers
+    toggleFollowingProcess, requestUsers
 } from "../../redux/users-reducer";
 import Users from "./Users";
 import axios from "axios";
@@ -36,11 +36,11 @@ class UsersContainer extends React.Component {
     // }
 
     componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.pageSize);
+        this.props.requestUsers(this.props.currentPage, this.props.pageSize);
     }
 
     onPageChanged = (pageNumber) => {
-        this.props.getUsers(pageNumber, this.props.pageSize);
+        this.props.requestUsers(pageNumber, this.props.pageSize);
     }
 
     render() {
@@ -74,10 +74,10 @@ let mapStateToProps = (state) => {
 }
 
 export default compose(
-    withAuthRedirect,
-    connect(mapStateToProps, {follow, unfollow, setCurrentPage, toggleFollowingProcess, getUsers})
+    connect(mapStateToProps, {follow, unfollow, setCurrentPage, toggleFollowingProcess, requestUsers})
 )(UsersContainer);
 
+// withAuthRedirect,
 
 // let mapDispatchToProps = (dispatch) => {
 //     return {
